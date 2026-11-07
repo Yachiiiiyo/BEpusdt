@@ -39,6 +39,13 @@ COPY --from=builder /go/release/bepusdt /usr/local/bin/bepusdt
 # 设置时区
 RUN ln -fs /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
 
+# 数据与日志统一放在 /var/lib/bepusdt，部署时请挂载该目录
+ENV SQLITE=/var/lib/bepusdt/sqlite.db
+ENV LOG=/var/lib/bepusdt/log/
+RUN mkdir -p /var/lib/bepusdt/log
+WORKDIR /var/lib/bepusdt
+VOLUME ["/var/lib/bepusdt"]
+
 EXPOSE 8080
 ENTRYPOINT ["bepusdt"]
 CMD ["start"]

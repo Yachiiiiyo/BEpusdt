@@ -1,11 +1,15 @@
 package cmd
 
-import "github.com/urfave/cli/v3"
+import (
+	"github.com/urfave/cli/v3"
+	"github.com/v03413/bepusdt/app/log"
+	"github.com/v03413/bepusdt/app/model"
+)
 
 var SQLiteFlag = &cli.StringFlag{
 	Name:    "sqlite",
-	Value:   "/var/lib/bepusdt/sqlite.db",
-	Usage:   "SQLite 数据库文件路径",
+	Value:   model.DefaultSQLite,
+	Usage:   "SQLite 数据库文件路径，留空时使用默认值",
 	Sources: cli.EnvVars("SQLITE"),
 }
 
@@ -18,7 +22,7 @@ var PostgresDSNFlag = &cli.StringFlag{
 
 var LogFlag = &cli.StringFlag{
 	Name:    "log",
-	Value:   "/var/log/bepusdt/",
+	Value:   log.DefaultDir,
 	Usage:   "日志文件保存路径",
 	Sources: cli.EnvVars("LOG"),
 }

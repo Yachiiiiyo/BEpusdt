@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+	"strings"
 	"time"
 
 	"github.com/glebarez/sqlite"
@@ -11,6 +12,9 @@ import (
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 )
+
+// DefaultSQLite 是 SQLite 默认路径，容器内位于挂载目录 /var/lib/bepusdt 下
+const DefaultSQLite = "/var/lib/bepusdt/sqlite.db"
 
 var Db *gorm.DB
 var err error
@@ -33,6 +37,12 @@ func Init(db, dsn string) error {
 }
 
 func initSqlite(db string) error {
+	if db = strings.TrimSpace(db); db == "" {
+		db = DefaultSQLite
+	}
+	if abs, err := filepath.Abs(db); err == nil {
+		db = abs
+	}
 	if err := os.MkdirAll(filepath.Dir(db), os.ModePerm); err != nil {
 
 		return fmt.Errorf("创建数据库目录失败：%w", err)
@@ -45,6 +55,7 @@ func initSqlite(db string) error {
 		"&_pragma=synchronous(NORMAL)"+ // NORMAL 模式，性能与安全平衡
 		"&_pragma=wal_autocheckpoint(1500)", // 适中的 checkpoint 频率
 		db)
+	fmt.Printf("SQLite 数据库路径：%s\n", db)
 	Db, err = gorm.Open(sqlite.Open(dsn), &gorm.Config{})
 	if err != nil {
 

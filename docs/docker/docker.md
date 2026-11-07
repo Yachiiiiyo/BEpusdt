@@ -31,7 +31,7 @@ docker run -d --restart=unless-stopped -p 8080:8080 v03413/bepusdt:latest
 
 ### SQLite 数据库（默认）
 
-默认情况下，系统使用 SQLite 数据库存储所有数据，数据保存在容器内部路径 `/var/lib/bepusdt`。
+默认情况下，系统使用 SQLite 数据库存储所有数据，数据库（`sqlite.db`）和日志（`log/` 目录）默认都保存在容器内的 `/var/lib/bepusdt`，可通过环境变量 `SQLITE`、`LOG` 覆盖，留空则使用默认值。
 
 **重要提示：** 为避免容器删除导致数据丢失，强烈建议将数据目录挂载到宿主机：
 

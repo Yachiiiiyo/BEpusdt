@@ -5,10 +5,14 @@ import (
 	"io"
 	"os"
 	"path/filepath"
+	"strings"
 
 	"github.com/natefinch/lumberjack"
 	"github.com/sirupsen/logrus"
 )
+
+// DefaultDir 是日志默认目录,与数据库同在挂载目录 /var/lib/bepusdt 下
+const DefaultDir = "/var/lib/bepusdt/log/"
 
 var (
 	Task    *logrus.Logger
@@ -42,6 +46,13 @@ func newLogger(file string) (*logrus.Logger, error) {
 }
 
 func Init(dir string) error {
+	if dir = strings.TrimSpace(dir); dir == "" {
+		dir = DefaultDir
+	}
+	if abs, err := filepath.Abs(dir); err == nil {
+		dir = abs
+	}
+
 	if err := os.MkdirAll(dir, os.ModePerm); err != nil {
 		return fmt.Errorf("创建日志目录失败：%w", err)
 	}
@@ -59,6 +70,7 @@ func Init(dir string) error {
 	}
 
 	logPath = dir
+	fmt.Printf("日志目录：%s\n", dir)
 
 	return nil
 }
