@@ -51,6 +51,15 @@ func adminInit(e *gin.Engine) {
 		PostRegister(rateRtr, "/sync", true, rateHdr.Sync)
 	}
 
+	var sweepRtr = e.Group("/api/sweep")
+	var sweepHdr = new(admin.Sweep)
+	{
+		PostRegister(sweepRtr, "/list", true, sweepHdr.List)
+		PostRegister(sweepRtr, "/retry", true, sweepHdr.Retry)
+		PostRegister(sweepRtr, "/collect", true, sweepHdr.Collect)
+		PostRegister(sweepRtr, "/info", true, sweepHdr.Info)
+	}
+
 	var dashboardRtr = e.Group("/api/dashboard")
 	var dashboardHdr = new(admin.Dashboard)
 	{

@@ -226,6 +226,7 @@ func (Epusdt) UpdateOrder(ctx *gin.Context) {
 		Name:              order.Name,
 		Timeout:           int64(math.Ceil(remaining.Seconds())),
 		Fiat:              order.Fiat,
+		AddressLocked:     money.IsZero(),
 		ClientFingerprint: fp,
 	}
 

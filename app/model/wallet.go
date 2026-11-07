@@ -25,6 +25,7 @@ type Wallet struct {
 	TradeType   string `gorm:"column:trade_type;type:varchar(20);not null;uniqueIndex:idx_address;comment:交易类型" json:"trade_type"`
 	OtherNotify uint8  `gorm:"column:other_notify;not null;default:0;comment:其它通知" json:"other_notify"`
 	Remark      string `gorm:"column:remark;type:varchar(255);not null;default:'';comment:备注" json:"remark"`
+	Derived     bool   `gorm:"-" json:"-"` // HD 派生地址，不入库
 	AutoTimeAt
 }
 
@@ -130,6 +131,10 @@ func (wa *Wallet) GetNetwork() Network {
 }
 
 func (wa *Wallet) GetPaymentAddr() string {
+	if wa.Derived {
+
+		return wa.Address
+	}
 	if wa.TradeType == string(UsdtTon) {
 
 		return wa.Address

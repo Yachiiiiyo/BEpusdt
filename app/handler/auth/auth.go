@@ -313,6 +313,28 @@ func (Auth) Menu(ctx *gin.Context) {
 				Type:      2,
 			},
 		},
+		{
+			Id:        "08",
+			Path:      "/sweep",
+			Name:      "sweep",
+			Component: "sweep/sweep",
+			Meta: meta{
+				Title:     "sweep",
+				Hide:      false,
+				Disable:   false,
+				KeepAlive: true,
+				Affix:     false,
+				Link:      "",
+				Iframe:    false,
+				IsFull:    false,
+				Roles:     []string{"admin"},
+				SvgIcon:   "financial-statement",
+				Icon:      "",
+				Sort:      1,
+				Type:      2,
+			},
+			Children: nil,
+		},
 	}
 
 	base.Ok(ctx, data)

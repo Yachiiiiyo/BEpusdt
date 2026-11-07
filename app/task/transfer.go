@@ -256,6 +256,11 @@ func tronResourceHandle(ctx context.Context) {
 func markFinalConfirmed(o model.Order) {
 	o.SetSuccess()
 	notifyOrderSuccess(o)
+
+	// HD 归集入队失败只记日志，不影响订单确认和回调
+	if err := model.EnqueueSweep(o); err != nil {
+		log.Task.Warn("HD 归集入队失败：", err)
+	}
 }
 
 func receivableOrderStatuses() []int {

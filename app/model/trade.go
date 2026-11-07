@@ -109,7 +109,7 @@ func BuildOrder(p OrderParams, trade Trade) (Order, error) {
 		Money:         p.Money.String(),
 		Address:       trade.Wallet.GetPaymentAddr(),
 		MatchAddress:  trade.Wallet.GetMatchAddr(),
-		AddressLocked: p.Money.IsZero(), // 零值订单，地址锁定 独占
+		AddressLocked: p.AddressLocked, // 地址锁定 独占
 		Status:        OrderStatusWaiting,
 		Name:          p.Name,
 		ApiType:       p.ApiType,
@@ -136,6 +136,11 @@ func BuildOrder(p OrderParams, trade Trade) (Order, error) {
 }
 
 func BuildTrade(p OrderParams) (Trade, error) {
+	return buildTrade(p, nil)
+}
+
+// buildTrade reuse 为重选支付方式的原订单，原地址是当前助记词派生的则继续使用
+func buildTrade(p OrderParams, reuse *Order) (Trade, error) {
 	// 获取代币类型
 	crypto, err := GetCrypto(p.TradeType)
 	if err != nil {
@@ -151,7 +156,7 @@ func BuildTrade(p OrderParams) (Trade, error) {
 		return Trade{}, fmt.Errorf("%s %s 汇率异常", crypto, p.Fiat)
 	}
 
-	var wallets = GetAvailableWallets(p.TradeType)
+	var wallets []Wallet
 	if p.Address != "" { // 指定地址
 		w, err := NewWallet(p.Address, p.TradeType)
 		if err != nil {
@@ -159,6 +164,20 @@ func BuildTrade(p OrderParams) (Trade, error) {
 		}
 
 		wallets = []Wallet{w}
+	} else if IsHdTradeType(p.TradeType) { // HD 派生地址
+		w, ok, err := reuseDerivedWallet(reuse, p.TradeType)
+		if err != nil {
+			return Trade{}, err
+		}
+		if !ok {
+			if w, err = allocateDerivedWallet(p.TradeType, p.OrderId); err != nil {
+				return Trade{}, err
+			}
+		}
+
+		wallets = []Wallet{w}
+	} else {
+		wallets = GetAvailableWallets(p.TradeType)
 	}
 
 	if len(wallets) == 0 {
@@ -185,7 +204,7 @@ func RebuildOrder(t Order, p OrderParams) (Order, error) {
 		return t, nil
 	}
 
-	data, err := BuildTrade(p)
+	data, err := buildTrade(p, &t)
 	if err != nil {
 		return t, err
 	}
@@ -259,6 +278,8 @@ func BuildPendingOrder(p OrderParams) (Order, error) {
 			crypto = Crypto(cur)
 		}
 	}
+
+	p.AddressLocked = p.Money.IsZero() // 零值订单，地址锁定 独占
 
 	return BuildOrder(p, Trade{
 		Crypto: crypto,

@@ -264,9 +264,8 @@ func (o *Order) GetMethods(crypto Crypto) []MethodItem {
 			continue
 		}
 
-		// 检查是否有可用钱包
-		count := len(GetAvailableWallets(TradeType(tradeTypeStr)))
-		if count == 0 {
+		// 检查是否有可用钱包，HD 派生类型下单时再分配地址
+		if !IsHdTradeType(TradeType(tradeTypeStr)) && len(GetAvailableWallets(TradeType(tradeTypeStr))) == 0 {
 			continue
 		}
 
@@ -372,6 +371,17 @@ func GetNotifyFailedTradeOrders() ([]Order, error) {
 
 // CalcTradeAmount 计算当前实际可用的交易金额
 func CalcTradeAmount(wallets []Wallet, rate decimal.Decimal, p OrderParams) (Wallet, string, error) {
+	if len(wallets) == 1 && wallets[0].Derived { // 派生地址每单独立，无需占用检查和金额递增
+		amount, _, err := calcBaseAmount(rate, p)
+		if err != nil {
+			return Wallet{}, "", err
+		}
+		if p.AddressLocked {
+			return wallets[0], decimal.Zero.String(), nil
+		}
+
+		return wallets[0], amount.String(), nil
+	}
 	if p.AddressLocked {
 		return LockTradeAddress(wallets, p.TradeType)
 	}
@@ -384,14 +394,9 @@ func CalcTradeAmount(wallets []Wallet, rate decimal.Decimal, p OrderParams) (Wal
 		lock[order.Address+order.Amount] = true
 	}
 
-	atom, precision := GetAtomicity(p.TradeType)
-	if rate.LessThanOrEqual(decimal.Zero) || precision <= 0 {
-		return Wallet{}, "", errors.New(fmt.Sprintf("[%v - %v]原子颗粒度计算异常，联系管理员处理！", atom, precision))
-	}
-
-	amount := p.Money.DivRound(rate, precision)
-	if amount.LessThan(atom) { // 低于最小原子精度，从最小原子精度开始计算
-		amount = atom
+	amount, atom, err := calcBaseAmount(rate, p)
+	if err != nil {
+		return Wallet{}, "", err
 	}
 
 	var i = 0
@@ -412,6 +417,21 @@ func CalcTradeAmount(wallets []Wallet, rate decimal.Decimal, p OrderParams) (Wal
 			return Wallet{}, "", errors.New("计算交易金额异常，联系管理员处理！")
 		}
 	}
+}
+
+// calcBaseAmount 按汇率和原子精度计算基础交易数额，返回数额和原子精度
+func calcBaseAmount(rate decimal.Decimal, p OrderParams) (decimal.Decimal, decimal.Decimal, error) {
+	atom, precision := GetAtomicity(p.TradeType)
+	if rate.LessThanOrEqual(decimal.Zero) || precision <= 0 {
+		return decimal.Zero, atom, errors.New(fmt.Sprintf("[%v - %v]原子颗粒度计算异常，联系管理员处理！", atom, precision))
+	}
+
+	amount := p.Money.DivRound(rate, precision)
+	if amount.LessThan(atom) { // 低于最小原子精度，从最小原子精度开始计算
+		amount = atom
+	}
+
+	return amount, atom, nil
 }
 
 // LockTradeAddress 检测交易地址，独占使用

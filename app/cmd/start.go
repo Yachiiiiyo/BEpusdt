@@ -7,6 +7,7 @@ import (
 	"os"
 	"os/signal"
 	"runtime"
+	"strings"
 	"syscall"
 	"time"
 
@@ -29,6 +30,14 @@ var Start = &cli.Command{
 	Usage: "启动收款网关",
 	Flags: []cli.Flag{SQLiteFlag, PostgresDSNFlag, LogFlag, ListenFlag},
 	Before: func(ctx context.Context, c *cli.Command) (context.Context, error) {
+		if err := model.InitHD(); err != nil {
+			return ctx, fmt.Errorf("HD 派生初始化失败 %w", err)
+		}
+
+		if err := model.InitSweep(); err != nil {
+			return ctx, fmt.Errorf("HD 归集初始化失败 %w", err)
+		}
+
 		postgres := c.String("postgres")
 		sqlite := c.String("sqlite")
 		if err := model.Init(sqlite, postgres); err != nil {
@@ -37,6 +46,14 @@ var Start = &cli.Command{
 
 		if err := log.Init(c.String("log")); err != nil {
 			return ctx, fmt.Errorf("日志初始化失败 %w", err)
+		}
+
+		if types := model.GetHdTradeTypes(); len(types) > 0 {
+			log.Info(fmt.Sprintf("HD 派生已启用：%s", strings.Join(types, ",")))
+		}
+
+		if model.IsSweepEnabled() {
+			log.Info(fmt.Sprintf("HD 归集已启用：归集目标 %s，手续费地址 %s（请保持有 BNB）", model.SweepDestAddress(), model.SweepGasAddress()))
 		}
 
 		return ctx, task.Init()

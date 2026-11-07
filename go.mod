@@ -4,6 +4,7 @@ go 1.26.2
 
 require (
 	filippo.io/edwards25519 v1.2.0
+	github.com/btcsuite/btcd v0.24.2
 	github.com/btcsuite/btcd/btcutil v1.1.6
 	github.com/btcsuite/btcd/chaincfg/chainhash v1.1.0
 	github.com/eclipse/paho.mqtt.golang v1.5.1
@@ -21,6 +22,7 @@ require (
 	github.com/smallnest/chanx v1.2.0
 	github.com/spf13/cast v1.10.0
 	github.com/tidwall/gjson v1.18.0
+	github.com/tyler-smith/go-bip39 v1.1.0
 	github.com/urfave/cli/v3 v3.8.0
 	github.com/v03413/go-cache v0.0.0-20250922030915-0ab5b738a932
 	github.com/v03413/tronprotocol v0.0.0-20240824084238-bbd62f5e0158
@@ -33,10 +35,12 @@ require (
 
 require (
 	github.com/BurntSushi/toml v1.6.0 // indirect
+	github.com/btcsuite/btcd/btcec/v2 v2.3.4 // indirect
 	github.com/bytedance/gopkg v0.1.4 // indirect
 	github.com/bytedance/sonic v1.15.1 // indirect
 	github.com/bytedance/sonic/loader v0.5.1 // indirect
 	github.com/cloudwego/base64x v0.1.7 // indirect
+	github.com/decred/dcrd/dcrec/secp256k1/v4 v4.0.1 // indirect
 	github.com/dustin/go-humanize v1.0.1 // indirect
 	github.com/gabriel-vasile/mimetype v1.4.13 // indirect
 	github.com/gin-contrib/sse v1.1.1 // indirect

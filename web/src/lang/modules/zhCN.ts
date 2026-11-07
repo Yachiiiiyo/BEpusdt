@@ -50,6 +50,7 @@ export default {
   menu: {
     ["home"]: "首页",
     ["wallet"]: "钱包管理",
+    ["sweep"]: "归集记录",
     ["order"]: "交易订单",
     ["rate"]: "汇率监控",
     ["rate-list"]: "同步记录",

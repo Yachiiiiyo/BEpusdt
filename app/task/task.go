@@ -27,6 +27,7 @@ func Init() error {
 	model.RefreshC()
 
 	bscInit()
+	sweepInit()
 	ethInit()
 	plasmaInit()
 	polygonInit()

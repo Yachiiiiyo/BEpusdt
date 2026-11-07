@@ -49,6 +49,7 @@ export default {
   },
   menu: {
     ["home"]: "home",
+    ["sweep"]: "sweep",
     ["file"]: "file",
     ["document-library"]: "document-library",
     ["table"]: "table",
