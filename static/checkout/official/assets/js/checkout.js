@@ -45,6 +45,36 @@
         return def != null ? def : key;
     }
 
+    var NET_NAMES = {
+        bsc: 'BNB Smart Chain (BSC)', tron: 'TRON', ethereum: 'Ethereum', polygon: 'Polygon (POL)',
+        arbitrum: 'Arbitrum One', base: 'Base', xlayer: 'X Layer', solana: 'Solana', aptos: 'Aptos',
+        ton: 'TON', plasma: 'Plasma'
+    };
+
+    function netKey(network, fallback) {
+        var k = String(network || '').toLowerCase().replace(/[\s_-]+/g, '');
+        if (NET_NAMES[k]) return k;
+        k = String(fallback || '').toLowerCase().replace(/[\s_-]+/g, '');
+        return NET_NAMES[k] ? k : '';
+    }
+
+    // 区块网络展示：本地 logo + 链全名；未知网络回退为后端给的简称
+    function renderNetTag(el, network, fallback) {
+        if (!el) return;
+        var key = netKey(network, fallback);
+        var name = key ? t('netName_' + key, NET_NAMES[key]) : (fallback || network || '');
+        el.textContent = '';
+        if (key) {
+            var img = document.createElement('img');
+            img.className = 'net-tag-logo';
+            img.alt = '';
+            img.onerror = function () { img.style.display = 'none'; };
+            img.src = WEB3 + '/network/' + key + '.svg';
+            el.appendChild(img);
+        }
+        el.appendChild(document.createTextNode(t('networkPrefix', '区块网络 · ') + name));
+    }
+
     function applyI18n() {
         if (!i18nReady || typeof i18next === 'undefined') return;
         document.querySelectorAll('[data-i18n]').forEach(function (el) {
@@ -302,7 +332,7 @@
         if (!aEl) return;
         if (selMethod) {
             aEl.textContent = selMethod.actual_amount + ' ' + selMethod.currency;
-            if (nEl) nEl.textContent = t('networkPrefix', '区块网络 · ') + selMethod.token_net_name;
+            renderNetTag(nEl, selMethod.network, selMethod.token_net_name);
             if (lineEl) lineEl.style.display = 'flex';
             if (rowEl) rowEl.style.display = '';
         } else {
@@ -500,6 +530,8 @@
             .catch(function () { showToast(t('toastNetworkError', '网络错误'), 'error'); });
     }
 
+    window.renderNetTag = renderNetTag;
+
     window.Payment = {
         init: function (config) {
             cfg = config || {};
@@ -678,7 +710,7 @@
         document.getElementById('orderMoneyQ').textContent = d.money || '--';
         document.getElementById('orderFiatQ').textContent = d.fiat || '';
         document.getElementById('payAmountQ').textContent = amount + ' ' + currency;
-        document.getElementById('payNetworkQ').textContent = _t('networkPrefix', '区块网络 · ') + netName;
+        window.renderNetTag(document.getElementById('payNetworkQ'), network, netName);
         document.getElementById('orderIdQ').textContent = d.order_id || '--';
         var paymentAddress = d.token || d.address || '';
         renderWalletAddress(paymentAddress);

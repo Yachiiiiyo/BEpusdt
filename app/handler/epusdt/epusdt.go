@@ -28,7 +28,7 @@ type createReq struct {
 	TradeType   string     `json:"trade_type"`
 	Address     string     `json:"address"`
 	Timeout     int64      `json:"timeout"`
-	Rate        string     `json:"rate"`
+	Rate        string     `json:"rate"` // 已废弃：会被忽略，汇率只以后台配置为准
 }
 
 type createOrderReq struct {
@@ -288,7 +288,6 @@ func (Epusdt) CreateTransaction(ctx *gin.Context) {
 		NotifyUrl:     req.NotifyURL,
 		Name:          req.Name,
 		Timeout:       req.Timeout,
-		Rate:          req.Rate,
 		Fiat:          req.Fiat,
 	})
 	if err != nil {

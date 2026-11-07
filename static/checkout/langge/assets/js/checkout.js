@@ -670,6 +670,11 @@
         return baseNetwork + ' · ' + tokenNetName;
     }
 
+    function networkFullLabel(method) {
+        if (networkKey(method) === 'bsc') return 'BNB Smart Chain (BSC)';
+        return networkProtocolLabel(method);
+    }
+
     function tokenProtocolLabel(method) {
         if (!method) return '';
         return networkProtocolLabel(method).replace(networkName(method) + ' · ', '');
@@ -1198,7 +1203,7 @@
         }
 
         if (amount) amount.textContent = moneyLabel(selectedMethod.actual_amount, selectedMethod.currency);
-        if (network) network.textContent = networkProtocolLabel(selectedMethod);
+        if (network) network.textContent = networkFullLabel(selectedMethod);
         if (button) button.disabled = false;
     }
 
@@ -1290,7 +1295,7 @@
 
         var rawAmount = paymentDetail.actual_amount || paymentDetail.amount || '';
         var amountText = moneyLabel(rawAmount, selectedMethod.currency);
-        var networkText = networkProtocolLabel(selectedMethod);
+        var networkText = networkFullLabel(selectedMethod);
         var address = paymentDetail.token || '';
         paymentAmountValue = String(rawAmount);
 

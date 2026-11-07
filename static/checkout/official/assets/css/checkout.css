@@ -129,9 +129,8 @@ body {
 #paymentStage .network-tag {
     display: block;
     min-width: 0;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+    overflow-wrap: anywhere;
+    line-height: 1.4;
 }
 
 .copy-trigger {
@@ -164,6 +163,7 @@ body {
     gap: 5px;
 }
 .network-tag { font-weight: 500; color: var(--color-text-muted); }
+.net-tag-logo { width: 16px; height: 16px; vertical-align: -3px; margin-right: 5px; }
 
 .fee-notice {
     display: inline-flex;

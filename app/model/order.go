@@ -269,11 +269,8 @@ func (o *Order) GetMethods(crypto Crypto) []MethodItem {
 			continue
 		}
 
-		// 获取汇率配置的浮动语法
-		syntax := GetK(ConfKey(fmt.Sprintf("rate_float_%s_%s", typeConf.Crypto, o.Fiat)))
-
-		// 获取汇率
-		rate, err := GetOrderRate(typeConf.Crypto, o.Fiat, syntax)
+		// 获取汇率（只读内部配置）
+		rate, err := GetOrderRate(typeConf.Crypto, o.Fiat)
 		if err != nil {
 			log.Error(fmt.Sprintf("GetPaymentMethods: get order rate error: %s", err.Error()))
 			continue

@@ -22,7 +22,6 @@ type OrderParams struct {
 	NotifyUrl         string          `json:"notify_url"`         // 异步通知地址
 	Name              string          `json:"name"`               // 商品名称
 	Timeout           int64           `json:"timeout"`            // 订单超时时间（秒）
-	Rate              string          `json:"rate"`               // 强制指定汇率
 	Fiat              Fiat            `json:"fiat"`               // 法币类型
 	CurrencyLimit     string          `json:"currency_limit"`     // 限定币种
 	AddressLocked     bool            `json:"address_locked"`     // 地址独占锁定
@@ -148,7 +147,7 @@ func buildTrade(p OrderParams, reuse *Order) (Trade, error) {
 	}
 
 	// 获取订单汇率
-	rate, err := GetOrderRate(crypto, p.Fiat, p.Rate)
+	rate, err := GetOrderRate(crypto, p.Fiat)
 	if err != nil {
 		return Trade{}, err
 	}

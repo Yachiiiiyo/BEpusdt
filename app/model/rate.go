@@ -173,7 +173,9 @@ func round(val float64, precision int) float64 {
 	return math.Floor(val*p+0.5) / p
 }
 
-func GetOrderRate(token Crypto, fiat Fiat, syntax string) (decimal.Decimal, error) {
+// GetOrderRate 返回创建订单使用的汇率，只读内部配置，不接受任何外部传入的汇率：
+// 最新同步的基准价 + 后台配置的 rate_float_<币>_<法币>（固定值或 ~ + - 语法），配置为空则用同步汇率。
+func GetOrderRate(token Crypto, fiat Fiat) (decimal.Decimal, error) {
 	var r Rate
 	Db.Where("crypto = ? and fiat = ?", token, fiat).Order("created_at desc").Limit(1).Find(&r)
 	if r.ID == 0 {
@@ -181,6 +183,7 @@ func GetOrderRate(token Crypto, fiat Fiat, syntax string) (decimal.Decimal, erro
 		return decimal.Decimal{}, fmt.Errorf("创建失败，请检查汇率同步是否正常：%s %s", token, fiat)
 	}
 
+	var syntax = GetK(ConfKey(fmt.Sprintf("rate_float_%s_%s", token, fiat)))
 	if syntax == "" {
 
 		return decimal.NewFromString(r.Rate)

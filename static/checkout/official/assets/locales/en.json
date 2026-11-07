@@ -40,5 +40,16 @@
   "paymentSuccessToast": "Payment successful",
   "canceledTitle": "Order Canceled",
   "canceledMessage": "This order has been canceled and can no longer be paid.<br>Please create a new order to continue.",
-  "orderCanceledToast": "Order canceled"
+  "orderCanceledToast": "Order canceled",
+  "netName_bsc": "BNB Smart Chain (BSC)",
+  "netName_tron": "TRON",
+  "netName_ethereum": "Ethereum",
+  "netName_polygon": "Polygon (POL)",
+  "netName_arbitrum": "Arbitrum One",
+  "netName_base": "Base",
+  "netName_xlayer": "X Layer",
+  "netName_solana": "Solana",
+  "netName_aptos": "Aptos",
+  "netName_ton": "TON",
+  "netName_plasma": "Plasma"
 }

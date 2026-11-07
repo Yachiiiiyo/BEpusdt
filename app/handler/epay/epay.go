@@ -29,7 +29,7 @@ type submit struct {
 	Money      string     `form:"money" json:"money" binding:"required,gt=0"`
 	Sign       string     `form:"sign" json:"sign" binding:"required"`
 	Fiat       model.Fiat `form:"fiat" json:"fiat"`
-	Rate       string     `form:"rate" json:"rate"`
+	Rate       string     `form:"rate" json:"rate"` // 已废弃：会被忽略，汇率只以后台配置为准
 	Timeout    string     `form:"timeout" json:"timeout"`
 	Address    string     `form:"address" json:"address"`
 }
@@ -96,7 +96,6 @@ func (e Epay) Submit(ctx *gin.Context) {
 		NotifyUrl:   data.NotifyURL,
 		Name:        data.Name,
 		Timeout:     cast.ToInt64(data.Timeout),
-		Rate:        data.Rate,
 		Fiat:        data.Fiat,
 	})
 	if err2 != nil {
@@ -143,9 +142,6 @@ func (e Epay) verify(data map[string]string) (submit, error) {
 
 	if address, ok := data["address"]; ok {
 		params.Address = address
-	}
-	if rate, ok := data["rate"]; ok && rate != "" {
-		params.Rate = rate
 	}
 	if timeout, ok := data["timeout"]; ok && timeout != "" {
 		params.Timeout = timeout
