@@ -14,5 +14,6 @@ func authInit(e *gin.Engine) {
 		PostRegister(authRtr, "/login", false, authHdr.Login)
 		PostRegister(authRtr, "/logout", true, authHdr.Logout)
 		PostRegister(authRtr, "/set_password", true, authHdr.SetPassword)
+		PostRegister(authRtr, "/security", true, authHdr.Security)
 	}
 }

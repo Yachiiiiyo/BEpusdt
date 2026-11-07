@@ -26,12 +26,3 @@ export const securityAPI = (data: any) => {
     data
   });
 };
-
-// 设置密码
-export const setPasswordAPI = (data: any) => {
-  return axios({
-    url: "/api/auth/set_password",
-    method: "post",
-    data
-  });
-};

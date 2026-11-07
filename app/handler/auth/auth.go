@@ -1,6 +1,8 @@
 package auth
 
 import (
+	"errors"
+	"regexp"
 	"strings"
 	"time"
 
@@ -18,15 +20,25 @@ import (
 type Auth struct {
 }
 
+var securePathRe = regexp.MustCompile(`^/[a-zA-Z0-9]+$`)
+
 type authLoginReq struct {
 	Username string `json:"username" binding:"required"`
 	Password string `json:"password" binding:"required"`
 }
 
 type authPasswordReq struct {
-	Password        string `json:"password" binding:"required"`
-	NewPassword     string `json:"new_password" binding:"required"`
-	ConfirmPassword string `json:"confirm_password" binding:"required"`
+	Password        string `json:"password"`
+	NewPassword     string `json:"new_password"`
+	ConfirmPassword string `json:"confirm_password"`
+}
+
+type authSecurityReq struct {
+	AdminSecure     string `json:"admin_secure"`
+	AdminUsername   string `json:"admin_username"`
+	Password        string `json:"password"`
+	NewPassword     string `json:"new_password"`
+	ConfirmPassword string `json:"confirm_password"`
 }
 
 func (Auth) Info(ctx *gin.Context) {
@@ -343,13 +355,13 @@ func (Auth) Menu(ctx *gin.Context) {
 func (Auth) Login(ctx *gin.Context) {
 	var req authLoginReq
 	if err := ctx.ShouldBindJSON(&req); err != nil {
-		base.Response(ctx, 400, err.Error())
+		base.Response(ctx, 400, "请输入用户名和密码")
 
 		return
 	}
 
 	var username = model.GetK(model.AdminUsername)
-	if req.Username != username {
+	if strings.TrimSpace(req.Username) != strings.TrimSpace(username) {
 		base.Response(ctx, 400, "用户名或密码错误")
 
 		return
@@ -387,35 +399,139 @@ func (Auth) Logout(ctx *gin.Context) {
 func (Auth) SetPassword(ctx *gin.Context) {
 	var req authPasswordReq
 	if err := ctx.ShouldBindJSON(&req); err != nil {
-		base.BadRequest(ctx, err.Error())
+		base.BadRequest(ctx, "请求参数格式错误")
 
 		return
 	}
 
-	var password = model.GetK(model.AdminPassword)
-	if bcrypt.CompareHashAndPassword([]byte(password), []byte(req.Password)) != nil {
-		base.BadRequest(ctx, "原密码错误")
+	relogin, err := applySecurity(ctx, "", "", req.Password, req.NewPassword, req.ConfirmPassword)
+	if err != nil {
+		return
+	}
+
+	if relogin {
+		base.Response(ctx, 200, gin.H{"relogin": true})
 
 		return
 	}
 
-	if req.ConfirmPassword != req.NewPassword {
-		base.BadRequest(ctx, "两次输入的新密码不一致")
+	base.Ok(ctx, "设置保存成功")
+}
+
+func (Auth) Security(ctx *gin.Context) {
+	var req authSecurityReq
+	if err := ctx.ShouldBindJSON(&req); err != nil {
+		base.BadRequest(ctx, "请求参数格式错误")
 
 		return
 	}
 
-	var newPassword = strings.TrimSpace(req.NewPassword)
+	var username = strings.TrimSpace(req.AdminUsername)
+	if username == "" {
+		base.BadRequest(ctx, "管理账号不能为空")
+
+		return
+	}
+
+	relogin, err := applySecurity(ctx, username, strings.TrimSpace(req.AdminSecure), req.Password, req.NewPassword, req.ConfirmPassword)
+	if err != nil {
+		return
+	}
+
+	if relogin {
+		base.Response(ctx, 200, gin.H{"relogin": true})
+
+		return
+	}
+
+	base.Response(ctx, 200, gin.H{"relogin": false})
+}
+
+func applySecurity(ctx *gin.Context, username, secure, password, newPassword, confirm string) (bool, error) {
+	if err := validateSecure(secure); err != "" {
+		base.BadRequest(ctx, err)
+
+		return false, errors.New(err)
+	}
+
+	if password == "" {
+		base.BadRequest(ctx, "请输入当前密码")
+
+		return false, errors.New("请输入当前密码")
+	}
+
+	var oldPassword = model.GetK(model.AdminPassword)
+	if bcrypt.CompareHashAndPassword([]byte(oldPassword), []byte(password)) != nil {
+		base.BadRequest(ctx, "当前密码错误")
+
+		return false, errors.New("当前密码错误")
+	}
+
+	var changePassword = newPassword != "" || confirm != ""
+	if err := validateNewPassword(newPassword, confirm, changePassword); err != "" {
+		base.BadRequest(ctx, err)
+
+		return false, errors.New(err)
+	}
+
+	var hash []byte
+	if changePassword {
+		var err error
+		hash, err = bcrypt.GenerateFromPassword([]byte(newPassword), bcrypt.DefaultCost)
+		if err != nil {
+			base.BadRequest(ctx, "密码加密失败，请稍后重试")
+
+			return false, err
+		}
+	}
+
+	if username != "" && username != model.GetK(model.AdminUsername) {
+		model.SetK(model.AdminUsername, username)
+	}
+	if secure != "" && secure != model.GetK(model.AdminSecure) {
+		model.SetK(model.AdminSecure, secure)
+	}
+
+	if changePassword {
+		model.SetK(model.AdminPassword, string(hash))
+		cache.Set(conf.AdminTokenK, "", -1)
+
+		return true, nil
+	}
+
+	return false, nil
+}
+
+func validateSecure(secure string) string {
+	if secure == "" {
+		return ""
+	}
+	if !strings.HasPrefix(secure, "/") {
+		return "安全入口必须以 / 开头"
+	}
+	if len(secure) < 8 || len(secure) > 18 {
+		return "安全入口长度需为8-18位"
+	}
+	if !securePathRe.MatchString(secure) {
+		return "安全入口只能包含字母和数字"
+	}
+
+	return ""
+}
+
+func validateNewPassword(newPassword, confirm string, change bool) string {
+	if !change {
+		return ""
+	}
+	if newPassword != confirm {
+		return "两次输入的新密码不一致"
+	}
 	if len(newPassword) < 6 {
-		base.BadRequest(ctx, "新密码长度不能少于6位")
-
-		return
+		return "新密码长度不能少于6位"
+	}
+	if len(newPassword) > 72 {
+		return "新密码过长（bcrypt 最多 72 字节，约 72 个英文字符或 24 个汉字），请缩短后重试"
 	}
 
-	hash, _ := bcrypt.GenerateFromPassword([]byte(newPassword), bcrypt.DefaultCost)
-
-	model.SetK(model.AdminPassword, string(hash))
-	cache.Set(conf.AdminTokenK, "", -1)
-
-	base.Ok(ctx, "修改成功，请重新登录")
+	return ""
 }
