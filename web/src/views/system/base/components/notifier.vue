@@ -98,6 +98,16 @@ const channelConfigs: ChannelConfig[] = [
     ]
   },
   {
+    value: "bark",
+    label: "Bark",
+    disabled: false,
+    fields: [
+      { key: "device_key", label: "Device Key", placeholder: "请输入 Bark Device Key", required: true, message: "Device Key 不能为空" },
+      { key: "server", label: "Server", placeholder: "可选，留空使用官方服务器 https://api.day.app", required: false },
+      { key: "sound", label: "Sound", placeholder: "可选，留空使用默认提示音 chime", required: false }
+    ]
+  },
+  {
     value: "wechat",
     label: "企业微信（开发中）",
     disabled: true,

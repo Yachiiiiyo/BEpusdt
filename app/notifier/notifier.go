@@ -9,6 +9,7 @@ const (
 	ChannelNone     = "none"
 	ChannelWechat   = "wechat"
 	ChannelTelegram = "telegram"
+	ChannelBark     = "bark"
 )
 
 type Notifier interface {
@@ -42,6 +43,8 @@ func NewNotifier(channel, params string) (Notifier, error) {
 		notifier = &Wechat{}
 	case ChannelTelegram:
 		notifier = &Telegram{}
+	case ChannelBark:
+		notifier = &Bark{}
 	default:
 		notifier = &None{}
 	}
