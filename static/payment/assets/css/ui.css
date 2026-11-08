@@ -1,0 +1,466 @@
+/* ============================================================
+   BEpusdt 共享 UI 样式（index.html / installed.html 共用）
+   ============================================================ */
+
+:root {
+    --bg: #F6F7F9;
+    --card: #FFFFFF;
+    --border: #E5E7EB;
+    --border-strong: #C7CBD1;
+    --text: #1F2328;
+    --muted: #5F6B7A;
+    --accent: #F38020;
+    --accent-hover: #D96C10;
+    --accent-soft: #FFF3E8;
+    --amber-bg: #FFF7ED;
+    --amber-border: #FED7AA;
+    --amber-strong: #B45309;
+    --amber-text: #92400E;
+    --ok-bg: #ECFDF3;
+    --ok-border: #BBF7D0;
+    --ok-text: #15803D;
+    --success: #16A34A;
+    --shadow: 0 1px 2px rgba(16, 24, 40, 0.05);
+}
+
+* {
+    box-sizing: border-box;
+}
+
+html {
+    -webkit-text-size-adjust: 100%;
+}
+
+body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC",
+        "Hiragino Sans GB", "Microsoft YaHei", Roboto, "Helvetica Neue", Arial,
+        sans-serif;
+    font-size: 15px;
+    line-height: 1.65;
+    background: var(--bg);
+    color: var(--text);
+    -webkit-font-smoothing: antialiased;
+}
+
+.mono {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+}
+
+.container {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 0 24px;
+}
+
+.container-narrow {
+    max-width: 720px;
+}
+
+/* ---------- 顶部栏 ---------- */
+
+.topbar {
+    background: var(--card);
+    border-bottom: 1px solid var(--border);
+}
+
+.topbar-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    min-height: 56px;
+    gap: 12px;
+}
+
+.brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 16px;
+    font-weight: 700;
+    letter-spacing: 0.2px;
+    color: var(--text);
+    text-decoration: none;
+}
+
+.brand-mark {
+    display: block;
+    flex: none;
+    border-radius: 7px;
+}
+
+/* ---------- 徽标 ---------- */
+
+.badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 4px 12px;
+    border-radius: 999px;
+    font-size: 13px;
+    font-weight: 500;
+    background: var(--card);
+    border: 1px solid var(--border);
+    color: var(--muted);
+    white-space: nowrap;
+}
+
+.badge-dot::before {
+    content: "";
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #22C55E;
+    box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.16);
+    flex: none;
+}
+
+/* ---------- 卡片 ---------- */
+
+.card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+    padding: 24px;
+}
+
+/* ---------- 按钮 ---------- */
+
+.btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    min-height: 44px;
+    padding: 10px 22px;
+    border-radius: 8px;
+    border: 1px solid transparent;
+    font: inherit;
+    font-size: 15px;
+    font-weight: 600;
+    line-height: 1.4;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background-color 0.15s ease, border-color 0.15s ease,
+        color 0.15s ease;
+}
+
+.btn-primary {
+    background: var(--accent);
+    color: #FFFFFF;
+}
+
+.btn-primary:hover {
+    background: var(--accent-hover);
+}
+
+.btn-secondary {
+    background: var(--card);
+    border-color: var(--border);
+    color: var(--text);
+}
+
+.btn-secondary:hover {
+    background: var(--bg);
+    border-color: var(--border-strong);
+}
+
+.btn-lg {
+    padding: 12px 28px;
+    font-size: 16px;
+}
+
+.btn:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+}
+
+.btn-sm {
+    min-height: 38px;
+    padding: 6px 14px;
+    font-size: 13px;
+    border-radius: 7px;
+    flex: none;
+}
+
+.btn-sm.copied {
+    background: var(--ok-bg);
+    border-color: var(--ok-border);
+    color: var(--ok-text);
+}
+
+/* ---------- 等宽取值 ---------- */
+
+.info-value {
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 14px;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 9px 12px;
+    min-width: 0;
+    user-select: all;
+    -webkit-user-select: all;
+    word-break: break-all;
+    overflow-wrap: anywhere;
+}
+
+/* ---------- 页脚 ---------- */
+
+.site-footer {
+    padding: 32px 0 40px;
+    text-align: center;
+    color: var(--muted);
+    font-size: 13px;
+}
+
+/* ---------- 屏幕阅读器专用 ---------- */
+
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+/* ---------- 移动端 ---------- */
+
+@media (max-width: 640px) {
+    .container {
+        padding: 0 16px;
+    }
+
+    .btn {
+        width: 100%;
+    }
+
+    .btn-sm {
+        width: 100%;
+        min-height: 44px;
+    }
+}
+
+/* ---------- 减少动效 ---------- */
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation: none !important;
+        transition: none !important;
+        scroll-behavior: auto !important;
+    }
+}
+
+/* ---------- 深色模式（可选支持） ---------- */
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --bg: #101317;
+        --card: #171B21;
+        --border: #2A2F37;
+        --border-strong: #3A404A;
+        --text: #E6E8EB;
+        --muted: #9AA4B1;
+        --accent-soft: #3A2413;
+        --amber-bg: #2E1F0C;
+        --amber-border: #5A3D14;
+        --amber-strong: #F5B366;
+        --amber-text: #E8C48F;
+        --ok-bg: #10261A;
+        --ok-border: #1E4630;
+        --ok-text: #5BD08A;
+        --success: #4ADE80;
+        --shadow: none;
+    }
+
+    .badge-dot::before {
+        box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.22);
+    }
+}
+
+/* ============================================================
+   Toast 提示（installed.html 使用）
+   ============================================================ */
+
+.toast {
+    position: fixed;
+    top: calc(16px + env(safe-area-inset-top));
+    left: 50%;
+    transform: translateX(-50%);
+    max-width: calc(100vw - 32px);
+    z-index: 1200;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    box-shadow: 0 6px 20px rgba(16, 24, 40, 0.14);
+    padding: 12px 18px 12px 14px;
+    font-size: 14px;
+    font-weight: 500;
+    animation: toast-in 0.18s ease-out;
+}
+
+.toast[hidden] {
+    display: none;
+}
+
+.toast.toast-out {
+    animation: toast-out 0.18s ease-in forwards;
+}
+
+.toast-icon {
+    flex: none;
+    display: inline-flex;
+}
+
+.toast-icon[hidden] {
+    display: none;
+}
+
+.toast-icon-success {
+    color: var(--success);
+}
+
+.toast-icon-error {
+    color: var(--amber-strong);
+}
+
+.toast-success {
+    border-left: 4px solid var(--success);
+}
+
+.toast-error {
+    border-left: 4px solid var(--amber-strong);
+}
+
+@keyframes toast-in {
+    from {
+        opacity: 0;
+        transform: translateX(-50%) translateY(-10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+    }
+}
+
+@keyframes toast-out {
+    from {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0);
+    }
+
+    to {
+        opacity: 0;
+        transform: translateX(-50%) translateY(10px);
+    }
+}
+
+/* ============================================================
+   自定义确认框（installed.html 使用）
+   ============================================================ */
+
+.modal-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 1100;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    background: rgba(16, 24, 40, 0.5);
+    animation: modal-fade-in 0.18s ease-out;
+}
+
+.modal-overlay[hidden] {
+    display: none;
+}
+
+.modal-card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    box-shadow: 0 12px 40px rgba(16, 24, 40, 0.22);
+    width: 100%;
+    max-width: 420px;
+    padding: 24px;
+    animation: modal-card-in 0.2s ease-out;
+}
+
+.modal-card h2 {
+    margin: 0 0 12px;
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.modal-card p {
+    margin: 0 0 10px;
+    font-size: 14.5px;
+}
+
+.modal-card ul {
+    margin: 0 0 12px;
+    padding-left: 20px;
+    font-size: 14.5px;
+}
+
+.modal-card li + li {
+    margin-top: 4px;
+}
+
+.modal-warn {
+    color: var(--amber-strong);
+    font-weight: 700;
+}
+
+.modal-ask {
+    font-weight: 600;
+}
+
+.modal-actions {
+    display: flex;
+    gap: 12px;
+    margin-top: 20px;
+}
+
+@media (max-width: 640px) {
+    .modal-actions {
+        flex-direction: column;
+    }
+
+    .modal-actions .btn-primary {
+        order: -1;
+    }
+}
+
+@keyframes modal-fade-in {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes modal-card-in {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
