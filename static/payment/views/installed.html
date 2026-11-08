@@ -454,11 +454,23 @@
                 }
             }
 
+            function setBackgroundInert(on) {
+                var parts = document.querySelectorAll('body > header, body > main, body > footer');
+                for (var i = 0; i < parts.length; i++) {
+                    if (on) {
+                        parts[i].setAttribute('inert', '');
+                    } else {
+                        parts[i].removeAttribute('inert');
+                    }
+                }
+            }
+
             function closeConfirmDialog() {
                 if (!overlay || overlay.hidden) {
                     return;
                 }
                 overlay.hidden = true;
+                setBackgroundInert(false);
                 document.removeEventListener('keydown', onTrapKeydown);
                 document.body.style.overflow = prevBodyOverflow;
                 if (lastTrigger) {
@@ -472,6 +484,7 @@
                 prevBodyOverflow = document.body.style.overflow;
                 document.body.style.overflow = 'hidden';
                 overlay.hidden = false;
+                setBackgroundInert(true);
                 document.addEventListener('keydown', onTrapKeydown);
                 document.getElementById('confirm-cancel').focus();
             }

@@ -283,6 +283,14 @@ body {
     .badge-dot::before {
         box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.22);
     }
+
+    .modal-overlay {
+        background: rgba(0, 0, 0, 0.86);
+    }
+
+    .modal-card {
+        box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6);
+    }
 }
 
 /* ============================================================
@@ -378,7 +386,12 @@ body {
     align-items: center;
     justify-content: center;
     padding: 20px;
-    background: rgba(16, 24, 40, 0.5);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    /* 足够不透明,避免后面的页面文字从遮罩下透出来 */
+    background: rgba(16, 24, 40, 0.82);
+    -webkit-backdrop-filter: blur(6px);
+    backdrop-filter: blur(6px);
     animation: modal-fade-in 0.18s ease-out;
 }
 
@@ -393,7 +406,11 @@ body {
     box-shadow: 0 12px 40px rgba(16, 24, 40, 0.22);
     width: 100%;
     max-width: 420px;
+    max-height: calc(100vh - 40px);
+    max-height: calc(100dvh - 40px);
+    margin: auto;
     padding: 24px;
+    overflow-y: auto;
     animation: modal-card-in 0.2s ease-out;
 }
 
