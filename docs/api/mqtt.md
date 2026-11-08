@@ -179,4 +179,4 @@ BEpusdt 的 MQTT 客户端已启用自动重连，断线后会自动恢复并重
 - [交易类型完整列表](../trade-type.md)
 - [API 对接文档](./api.md)
 - [订单回调通知](../notify/readme.md)
-- [BEpusdt GitHub](https://github.com/v03413/BEpusdt)
+- [BEpusdt GitHub](https://github.com/Yachiiiiyo/BEpusdt)

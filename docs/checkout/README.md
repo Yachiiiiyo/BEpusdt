@@ -78,7 +78,7 @@ BEpusdt 启动时会扫描该目录，自动注册所有合法模板，并在后
 **1. 克隆源码**
 
 ```bash
-git clone https://github.com/v03413/BEpusdt.git
+git clone https://github.com/Yachiiiiyo/BEpusdt.git
 cd BEpusdt
 ```
 

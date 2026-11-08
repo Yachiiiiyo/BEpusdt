@@ -13,10 +13,10 @@
 
 ### 1. 获取安装包
 
-从 [GitHub Releases](https://github.com/v03413/bepusdt/releases/latest/) 页面下载与系统架构对应的安装包。
+从 [GitHub Releases](https://github.com/Yachiiiiyo/BEpusdt/releases/latest/) 页面下载与系统架构对应的安装包。
 
 ```bash
-wget -O ./linux-amd64-BEpusdt.tar.gz https://github.com/v03413/BEpusdt/releases/latest/download/linux-amd64-BEpusdt.tar.gz
+wget -O ./linux-amd64-BEpusdt.tar.gz https://github.com/Yachiiiiyo/BEpusdt/releases/latest/download/linux-amd64-BEpusdt.tar.gz
 ```
 
 ### 2. 解压安装包

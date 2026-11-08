@@ -11,19 +11,19 @@
 </p>
 <p align="center">
 <a href="https://www.gnu.org/licenses/gpl-3.0.html">
-    <img src="https://img.shields.io/github/license/v03413/bepusdt" alt="license GPLV3">
+    <img src="https://img.shields.io/github/license/Yachiiiiyo/BEpusdt" alt="license GPLV3">
 </a>
-<a href="https://github.com/v03413/bepusdt">
-  <img src="https://img.shields.io/github/v/release/v03413/bepusdt" alt="GitHub Release">
+<a href="https://github.com/Yachiiiiyo/BEpusdt">
+  <img src="https://img.shields.io/github/v/release/Yachiiiiyo/BEpusdt" alt="GitHub Release">
 </a>
-<a href="https://github.com/v03413/bepusdt">
-  <img src="https://img.shields.io/github/downloads/v03413/bepusdt/total" alt="GitHub Release">
+<a href="https://github.com/Yachiiiiyo/BEpusdt">
+  <img src="https://img.shields.io/github/downloads/Yachiiiiyo/BEpusdt/total" alt="GitHub Release">
 </a>
 <a href="https://hub.docker.com/r/v03413/bepusdt">
     <img src="https://img.shields.io/docker/pulls/v03413/bepusdt?style=flat-square&logo=docker" alt="Docker Pulls">
 </a>
 <a href="https://github.com/gin-gonic/gin">
-    <img src="https://img.shields.io/github/stars/v03413/bepusdt?style=flat-square&logo=github" alt="GitHub Stars">
+    <img src="https://img.shields.io/github/stars/Yachiiiiyo/BEpusdt?style=flat-square&logo=github" alt="GitHub Stars">
 </a>
 </p>
 
@@ -91,10 +91,10 @@ docker run -d --restart=unless-stopped -p 8080:8080 v03413/bepusdt:latest
 
 感谢为本项目作出贡献的开发者：
 
-<a href="https://github.com/v03413/BEpusdt/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=v03413/BEpusdt" alt="BEpusdt 贡献者清单">
+<a href="https://github.com/Yachiiiiyo/BEpusdt/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=Yachiiiiyo/BEpusdt" alt="BEpusdt 贡献者清单">
 </a>
 
 ## 🌟 Star 历史
 
-[![Star History Chart](https://api.star-history.com/chart?repos=v03413/bepusdt&type=date&legend=top-left)](https://www.star-history.com/?repos=v03413%2Fbepusdt&type=date&legend=top-left)
+[![Star History Chart](https://api.star-history.com/chart?repos=Yachiiiiyo/BEpusdt&type=date&legend=top-left)](https://www.star-history.com/?repos=Yachiiiiyo%2FBEpusdt&type=date&legend=top-left)

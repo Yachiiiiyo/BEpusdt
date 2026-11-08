@@ -36,7 +36,7 @@
 
 **配置说明**
 
-- **支付币种**：详见 [支持的币种列表](https://github.com/v03413/BEpusdt/blob/main/docs/trade-type.md)，必须严格区分大小写。
+- **支付币种**：详见 [支持的币种列表](https://github.com/Yachiiiiyo/BEpusdt/blob/main/docs/trade-type.md)，必须严格区分大小写。
 - **法币类型**：仅支持 `CNY`、`USD`、`EUR`、`JPY`、`GBP` 五种，必须严格区分大小写。
 
 **⚠️ 重要说明：异步通知地址和同步回跳地址**

@@ -7,7 +7,7 @@ BEpusdt 在区块扫描过程中，所有区块数据均通过 RPC 节点获取�
 ## 内置公益节点
 
 BEpusdt 默认内置了一批公益 RPC
-节点，详见[源代码配置](https://github.com/v03413/BEpusdt/blob/0e1e22cebbf4a2127786e62b2b8b4d2175054c0b/app/model/conf.go#L140)。
+节点，详见[源代码配置](https://github.com/Yachiiiiyo/BEpusdt/blob/0e1e22cebbf4a2127786e62b2b8b4d2175054c0b/app/model/conf.go#L140)。
 
 ### 公益节点的局限性
 

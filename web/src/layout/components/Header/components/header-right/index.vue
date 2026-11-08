@@ -129,7 +129,7 @@ const onNightMode = () => {
 
 // 项目地址
 const onProject = () => {
-  window.open("https://github.com/v03413/BEpusdt", "_blank");
+  window.open("https://github.com/Yachiiiiyo/BEpusdt", "_blank");
 };
 
 // 退出登录

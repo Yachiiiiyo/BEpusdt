@@ -81,7 +81,7 @@
             </div>
             <span>区块网络配置</span>
             <a
-              href="https://github.com/v03413/BEpusdt/blob/main/docs/faq/rpc-endpoint.md"
+              href="https://github.com/Yachiiiiyo/BEpusdt/blob/main/docs/faq/rpc-endpoint.md"
               target="_blank"
               class="title-doc-link"
             >

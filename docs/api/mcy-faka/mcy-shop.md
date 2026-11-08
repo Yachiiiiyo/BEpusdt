@@ -24,7 +24,7 @@
 ### 3.增加支付通道
 
 原版易支付不支持`usdt`和`trx`
-，需有对原版代码进行替换；请把这个文件[Pay.php](https://raw.githubusercontent.com/v03413/bepusdt/refs/heads/main/docs/mcy-shop/Pay.php)
+，需有对原版代码进行替换；请把这个文件[Pay.php](https://raw.githubusercontent.com/Yachiiiiyo/BEpusdt/refs/heads/main/docs/mcy-shop/Pay.php)
 下载下来，替换到你的网站路径`/app/Plugin/Epay/Config`下的同名文件。
 
 ![Pay.php](../../mcy-shop/4.png)

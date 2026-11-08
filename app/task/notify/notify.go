@@ -66,7 +66,7 @@ func epay(ctx context.Context, order model.Order) error {
 		return err2
 	}
 
-	postReq.Header.Set("Powered-By", "https://github.com/v03413/bepusdt")
+	postReq.Header.Set("Powered-By", "https://github.com/Yachiiiiyo/BEpusdt")
 	resp, err := client.Do(postReq)
 	if err != nil {
 		return err
@@ -136,7 +136,7 @@ func epusdt(ctx context.Context, order model.Order) error {
 	}
 
 	postReq.Header.Set("Content-Type", "application/json")
-	postReq.Header.Set("Powered-By", "https://github.com/v03413/bepusdt")
+	postReq.Header.Set("Powered-By", "https://github.com/Yachiiiiyo/BEpusdt")
 	postReq.Header.Set("User-Agent", "BEpusdt/"+app.Version)
 	resp, err := client.Do(postReq)
 	if err != nil {
@@ -224,7 +224,7 @@ func deliverBepusdtStatusUpdate(db *gorm.DB, client *http.Client, authToken stri
 	}
 
 	req.Header.Set("Content-Type", "application/json")
-	req.Header.Set("Powered-By", "https://github.com/v03413/BEpusdt")
+	req.Header.Set("Powered-By", "https://github.com/Yachiiiiyo/BEpusdt")
 	resp, err := client.Do(req)
 	if err != nil {
 		return err

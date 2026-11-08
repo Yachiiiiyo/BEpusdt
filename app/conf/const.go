@@ -2,8 +2,11 @@ package conf
 
 const (
 	Desc   = "一款更好用的个人加密货币收款网关"
-	Github = "https://github.com/v03413/BEpusdt"
+	Github = "https://github.com/Yachiiiiyo/BEpusdt"
 )
+
+// HomeRepo 公开首页「查看项目仓库」链接
+const HomeRepo = "https://github.com/Yachiiiiyo/BEpusdt"
 
 const Debug = false
 

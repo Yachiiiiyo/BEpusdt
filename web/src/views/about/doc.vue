@@ -8,7 +8,7 @@
       </div>
       <p class="notice-text">
         本项目为研究学习区块链的开源项目，不提供任何形式的收费服务(谨防诈骗)，不鼓励任何衍生金融属性的交易行为，不负责任何使用本项目进行的三方行为；使用过程中遇见问题请提
-        <a href="https://github.com/v03413/BEpusdt/issues" target="_blank" class="notice-link">issue</a>
+        <a href="https://github.com/Yachiiiiyo/BEpusdt/issues" target="_blank" class="notice-link">issue</a>
         或群里交流，开源项目请自重！
       </p>
     </div>
@@ -37,24 +37,24 @@
         <ul class="link-list">
           <li>
             <span class="label">仓库地址</span>
-            <a href="https://github.com/v03413/BEpusdt" target="_blank" class="link">https://github.com/v03413/BEpusdt</a>
+            <a href="https://github.com/Yachiiiiyo/BEpusdt" target="_blank" class="link">https://github.com/Yachiiiiyo/BEpusdt</a>
           </li>
           <li>
             <span class="label">API 对接</span>
-            <a href="https://github.com/v03413/BEpusdt/blob/main/docs/api/api.md" target="_blank" class="link"
-              >https://github.com/v03413/BEpusdt/blob/main/docs/api/api.md</a
+            <a href="https://github.com/Yachiiiiyo/BEpusdt/blob/main/docs/api/api.md" target="_blank" class="link"
+              >https://github.com/Yachiiiiyo/BEpusdt/blob/main/docs/api/api.md</a
             >
           </li>
           <li>
             <span class="label">第三方程序对接说明</span>
-            <a href="https://github.com/v03413/BEpusdt/blob/main/docs/api/other.md" target="_blank" class="link"
-              >https://github.com/v03413/BEpusdt/blob/main/docs/api/other.md</a
+            <a href="https://github.com/Yachiiiiyo/BEpusdt/blob/main/docs/api/other.md" target="_blank" class="link"
+              >https://github.com/Yachiiiiyo/BEpusdt/blob/main/docs/api/other.md</a
             >
           </li>
           <li>
             <span class="label">交易类型完整列表</span>
-            <a href="https://github.com/v03413/BEpusdt/blob/main/docs/trade-type.md" target="_blank" class="link"
-              >https://github.com/v03413/BEpusdt/blob/main/docs/trade-type.md</a
+            <a href="https://github.com/Yachiiiiyo/BEpusdt/blob/main/docs/trade-type.md" target="_blank" class="link"
+              >https://github.com/Yachiiiiyo/BEpusdt/blob/main/docs/trade-type.md</a
             >
           </li>
         </ul>
@@ -66,27 +66,27 @@
         <div class="divider"></div>
         <ul class="link-list faq-list">
           <li>
-            <a href="https://github.com/v03413/BEpusdt/blob/main/docs/faq/server.md" target="_blank" class="link"
+            <a href="https://github.com/Yachiiiiyo/BEpusdt/blob/main/docs/faq/server.md" target="_blank" class="link"
               >服务器配置性能选型推荐 ⚡️</a
             >
           </li>
           <li>
-            <a href="https://github.com/v03413/BEpusdt/blob/main/docs/faq/bandwidth.md" target="_blank" class="link"
+            <a href="https://github.com/Yachiiiiyo/BEpusdt/blob/main/docs/faq/bandwidth.md" target="_blank" class="link"
               >服务器流量消耗说明解释</a
             >
           </li>
           <li>
-            <a href="https://github.com/v03413/BEpusdt/blob/main/docs/faq/login-reset.md" target="_blank" class="link"
+            <a href="https://github.com/Yachiiiiyo/BEpusdt/blob/main/docs/faq/login-reset.md" target="_blank" class="link"
               >后台入口账密忘记重置教程</a
             >
           </li>
           <li>
-            <a href="https://github.com/v03413/BEpusdt/blob/main/docs/faq/telegram-chat-id.md" target="_blank" class="link"
+            <a href="https://github.com/Yachiiiiyo/BEpusdt/blob/main/docs/faq/telegram-chat-id.md" target="_blank" class="link"
               >Telegram 通知 Chat ID 获取教程</a
             >
           </li>
           <li>
-            <a href="https://github.com/v03413/BEpusdt/blob/main/docs/faq/rpc-endpoint.md" target="_blank" class="link"
+            <a href="https://github.com/Yachiiiiyo/BEpusdt/blob/main/docs/faq/rpc-endpoint.md" target="_blank" class="link"
               >区块 RPC 节点稳定性说明指南 ‼️</a
             >
           </li>
